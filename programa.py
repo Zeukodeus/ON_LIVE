@@ -1,22 +1,64 @@
 from tkinter import *
 from tkinter import messagebox
+from random import choice
+
+# Definimos un diccionario vacío para almacenar las preguntas y respuestas
+
+preguntas_respuestas = {}
+
+# Función para agregar una pregunta y su respuesta al diccionario
+
+def agregar_pregunta_respuesta(pregunta, respuesta):
+    preguntas_respuestas[pregunta] = respuesta
+
+# Función para buscar una respuesta a partir de una pregunta dada
+
+def buscar_respuesta(pregunta):
+    if pregunta in preguntas_respuestas:
+        return preguntas_respuestas[pregunta]
+    else:
+        return "Lo siento, no tengo respuesta para esa pregunta."
+
+# Base de datos
+
+agregar_pregunta_respuesta("¿Cuál es la capital de España?", "Madrid")
+agregar_pregunta_respuesta("¿Quién escribió Don Quijote de la Mancha?", "Miguel de Cervantes")
+agregar_pregunta_respuesta("¿Cuál es el río más largo del mundo?", "El río Nilo.")
+agregar_pregunta_respuesta("¿Quién escribió la novela 'Don Quijote de la Mancha'?", "Miguel de Cervantes.")
+agregar_pregunta_respuesta("¿Cuál es el continente más poblado del mundo?", "Asia.")
+agregar_pregunta_respuesta("¿En qué año terminó la Segunda Guerra Mundial?", "1945.")
+agregar_pregunta_respuesta("¿Quién fue el primer hombre en pisar la Luna?", "Neil Armstrong.")
+agregar_pregunta_respuesta("¿Cuál es la capital de Australia?", "Canberra.")
+agregar_pregunta_respuesta("¿Quién escribió la novela 'Cien años de soledad'?", "Gabriel García Márquez.")
+agregar_pregunta_respuesta("¿Cuál es el elemento químico más abundante en la corteza terrestre?", "El oxígeno.")
+agregar_pregunta_respuesta("¿En qué país se encuentra la Torre Eiffel?", "Francia.")
+agregar_pregunta_respuesta("¿Quién es considerado el padre de la filosofía occidental?", "Sócrates.")
 
 # Función que se ejecutará cuando se haga clic en el botón "Botón 1"
+
 def boton1_clic():
-    texto.set("¡Has pulsado el botón 1!")
+    messagebox.showinfo("ON LIVE", "No se puede retornar")
 
 # Función que se ejecutará cuando se haga clic en el botón "Botón 2"
+
 def boton2_clic():
-    texto.set("¡Has pulsado el botón 2!")
+    pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
+    respuesta_aleatoria = preguntas_respuestas[pregunta_aleatoria]
+    cuadro_texto.config(text=pregunta_aleatoria)
+    respuesta.set("Aquí sale la respuesta")
+    cuadro_respuesta.delete(0, END)  # Agregar esta línea para borrar el texto del cuadro de respuesta
+
 
 # Función que se ejecutará cuando se haga clic en el botón "Botón 3"
+
 def boton3_clic():
-    respuesta_usuario = cuadro_respuesta.get() # Obtener la respuesta del usuario desde la caja de entrada
-    respuesta_correcta = "respuesta_correcta" # Aquí deberías cambiarlo por la respuesta correcta de tu pregunta
+    pregunta_actual = cuadro_texto.cget("text")
+    respuesta_correcta = buscar_respuesta(pregunta_actual)
+    respuesta_usuario = cuadro_respuesta.get() 
     if respuesta_usuario.lower() == respuesta_correcta.lower():
-        messagebox.showinfo("ON LIVE", "Tu respuesta es correcta")
+        respuesta.set("Tu respuesta es correcta")
     else:
-        messagebox.showinfo("ON LIVE", "No es correcta esa respuesta")
+        respuesta.set("La respuesta correcta es: " + respuesta_correcta)
 
 # Crear la ventana principal
 
@@ -25,55 +67,28 @@ ventana.title("ON LIVE")
 ventana.geometry("800x450")
 ventana.config(bg="gray")
 
-# Crear un objeto StringVar para almacenar el texto del cuadro de texto
+# Crear un cuadro de texto en el centro de la ventana superior
 
-pregunta = StringVar()
-
-# Configurar el valor inicial del cuadro de texto
-
-pregunta.set("Aquí sale la pregunta")
-frame_operaciones = Frame(ventana)
-frame_operaciones.config(bg="black", width=780, height=150)
-frame_operaciones.place(x=10,y=10)
+cuadro_texto = Label(ventana, width=20, bg="black", fg="red", font=("gabriola", 20))
+cuadro_texto.place(x=95, y=10, width=600, height=50)
 
 # Barra inferior de respuesta
 
 respuesta = StringVar()
-
-# Configurar el valor inicial del cuadro de texto
-
 respuesta.set("Aquí sale la respuesta")
-frame_operaciones_2 = Frame(ventana)
-frame_operaciones_2.config(bg="white", width=780, height=150)
-frame_operaciones_2.place(x=10,y=290)
-
-# Añadir respuesta de usuario
-
-cuadro_respuesta = Entry(frame_operaciones_2, width=30)
-cuadro_respuesta.place(x=250, y=50)
-cuadro_respuesta.config(bg="white", font="courier")
-
-# Crear un cuadro de texto en el centro de la ventana superior
-
-cuadro_texto = Label(ventana, textvariable=pregunta, width=20)
-cuadro_texto.place(x=300, y=10)
-cuadro_texto.config(bg="black", fg="red", font=("gabriola", 20))
-
-# Crear un cuadro de texto en el centro de la ventana inferior
-
-cuadro_texto = Label(ventana, textvariable=respuesta, width=20)
-cuadro_texto.config(bg="white", fg="green", font=("gabriola", 20))
-cuadro_texto.place(x=300, y=380)
+cuadro_respuesta = Entry(ventana, width=30, bg="white", font="courier")
+cuadro_respuesta.place(x=260, y=330)
+cuadro_texto_respuesta = Label(ventana, textvariable=respuesta, width=60, bg="white", fg="green", font=("gabriola", 20))
+cuadro_texto_respuesta.place(x=70, y=380)
 
 # Crear los dos botones de cambio entre preguntas
 
-boton1 = Button(ventana, text="Anterior", command=boton1_clic)
+boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="red", font=(", 10"))
 boton1.pack(side="left", padx=10)
-boton1.config(bg="black", fg="red", font=(", 10"))
 
-boton2 = Button(ventana, text="Siguiente", command=boton2_clic)
+boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="white", fg="green", font=(", 10"))
 boton2.pack(side="right", padx=10)
-boton2.config(bg="white", fg="green", font=(", 10"))
+
 
 # Crear el botón de comprobar
 
