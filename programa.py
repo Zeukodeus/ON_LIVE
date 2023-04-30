@@ -67,6 +67,7 @@ ventana.title("ON LIVE")
 ventana.geometry("800x450")
 ventana.config(bg="gray")
 
+
 # Crear un cuadro de texto en el centro de la ventana superior
 
 cuadro_texto = Label(ventana, width=20, bg="black", fg="red", font=("gabriola", 20))
@@ -83,18 +84,18 @@ cuadro_texto_respuesta.place(x=70, y=380)
 
 # Crear los dos botones de cambio entre preguntas
 
-boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="red", font=(", 10"))
+boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="white", font=("Arial", 12), padx=10, pady=5, relief=GROOVE)
 boton1.pack(side="left", padx=10)
 
-boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="white", fg="green", font=(", 10"))
+boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="white", fg="green", font=("Arial", 12), padx=10, pady=5, relief=GROOVE)
 boton2.pack(side="right", padx=10)
 
-
-# Crear el botón de comprobar
-
-boton3 = Button(ventana, text="Comprobar", command=boton3_clic)
+boton3 = Button(ventana, text="Comprobar", command=boton3_clic, bg="gray", fg="blue", font=("Arial", 12), padx=10, pady=5, relief=GROOVE)
 boton3.place(x=370, y=215)
-boton3.config(bg="gray", fg="blue", font=(", 10"))
+
+# Seleccionar una pregunta aleatoria y mostrarla en el cuadro de texto
+pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
+cuadro_texto.config(text=pregunta_aleatoria)
 
 # Iniciar el bucle principal de la aplicación
 
