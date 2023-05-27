@@ -23,16 +23,16 @@ def buscar_respuesta(pregunta):
 
 agregar_pregunta_respuesta("¿Cuál es la capital de España?", "Madrid")
 agregar_pregunta_respuesta("¿Quién escribió Don Quijote de la Mancha?", "Miguel de Cervantes")
-agregar_pregunta_respuesta("¿Cuál es el río más largo del mundo?", "El río Nilo.")
-agregar_pregunta_respuesta("¿Quién escribió la novela 'Don Quijote de la Mancha'?", "Miguel de Cervantes.")
-agregar_pregunta_respuesta("¿Cuál es el continente más poblado del mundo?", "Asia.")
-agregar_pregunta_respuesta("¿En qué año terminó la Segunda Guerra Mundial?", "1945.")
-agregar_pregunta_respuesta("¿Quién fue el primer hombre en pisar la Luna?", "Neil Armstrong.")
-agregar_pregunta_respuesta("¿Cuál es la capital de Australia?", "Canberra.")
-agregar_pregunta_respuesta("¿Quién escribió la novela 'Cien años de soledad'?", "Gabriel García Márquez.")
-agregar_pregunta_respuesta("¿Cuál es el elemento químico más abundante en la corteza terrestre?", "El oxígeno.")
-agregar_pregunta_respuesta("¿En qué país se encuentra la Torre Eiffel?", "Francia.")
-agregar_pregunta_respuesta("¿Quién es considerado el padre de la filosofía occidental?", "Sócrates.")
+agregar_pregunta_respuesta("¿Cuál es el río más largo del mundo?", "El río Nilo")
+agregar_pregunta_respuesta("¿Quién escribió la novela 'Don Quijote de la Mancha'?", "Miguel de Cervantes")
+agregar_pregunta_respuesta("¿Cuál es el continente más poblado del mundo?", "Asia")
+agregar_pregunta_respuesta("¿En qué año terminó la Segunda Guerra Mundial?", "1945")
+agregar_pregunta_respuesta("¿Quién fue el primer hombre en pisar la Luna?", "Neil Armstrong")
+agregar_pregunta_respuesta("¿Cuál es la capital de Australia?", "Canberra")
+agregar_pregunta_respuesta("¿Quién escribió la novela 'Cien años de soledad'?", "Gabriel García Márquez")
+agregar_pregunta_respuesta("¿Cuál es el elemento químico más abundante en la corteza terrestre?", "El oxígeno")
+agregar_pregunta_respuesta("¿En qué país se encuentra la Torre Eiffel?", "Francia")
+agregar_pregunta_respuesta("¿Quién es considerado el padre de la filosofía occidental?", "Sócrates")
 
 # Función que se ejecutará cuando se haga clic en el botón "Botón 1"
 
@@ -65,33 +65,42 @@ def boton3_clic():
 ventana = Tk()
 ventana.title("ON LIVE")
 ventana.geometry("800x450")
-ventana.config(bg="gray")
+ventana.config(bg="")
 
+# Cargar la imagen de fondo
+
+imagen_fondo = PhotoImage(file="img/on_live.png")
+imagen_boton1 = PhotoImage(file="img/morado.png")
+
+# Crear un widget Label para la imagen de fondo
+
+etiqueta_fondo = Label(ventana, image=imagen_fondo)
+etiqueta_fondo.place(x=0, y=0, relwidth=1, relheight=1)
 
 # Crear un cuadro de texto en el centro de la ventana superior
 
-cuadro_texto = Label(ventana, width=20, bg="black", fg="red", font=("gabriola", 20))
+cuadro_texto = Label(ventana, width=20, bg="black", fg="red", font=("gabriola", 20), relief=FLAT)
 cuadro_texto.place(x=95, y=10, width=600, height=50)
 
 # Barra inferior de respuesta
 
 respuesta = StringVar()
 respuesta.set("Aquí sale la respuesta")
-cuadro_respuesta = Entry(ventana, width=30, bg="white", font="courier")
-cuadro_respuesta.place(x=260, y=330)
-cuadro_texto_respuesta = Label(ventana, textvariable=respuesta, width=60, bg="white", fg="green", font=("gabriola", 20))
+cuadro_respuesta = Entry(ventana, width=30, bg="white", font="courier", relief=FLAT)
+cuadro_respuesta.place(x=240, y=330)
+cuadro_texto_respuesta = Label(ventana, textvariable=respuesta, width=60, bg="white", fg="green", font=("gabriola", 20), relief=FLAT)
 cuadro_texto_respuesta.place(x=70, y=380)
 
 # Crear los dos botones de cambio entre preguntas
 
-boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="white", font=("Arial", 12), padx=10, pady=5, relief=GROOVE)
+boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="white", font=("Arial", 12), image=imagen_boton1, padx=10, pady=5, relief=FLAT)
 boton1.pack(side="left", padx=10)
 
-boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="white", fg="green", font=("Arial", 12), padx=10, pady=5, relief=GROOVE)
+boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="white", fg="green", font=("Arial", 12), padx=10, pady=5, relief=FLAT)
 boton2.pack(side="right", padx=10)
 
-boton3 = Button(ventana, text="Comprobar", command=boton3_clic, bg="gray", fg="blue", font=("Arial", 12), padx=10, pady=5, relief=GROOVE)
-boton3.place(x=370, y=215)
+boton3 = Button(ventana, text="Comprobar", command=boton3_clic, bg="gray", fg="blue", font=("Arial", 12), padx=10, pady=5, relief=FLAT)
+boton3.place(x=330, y=205)
 
 # Seleccionar una pregunta aleatoria y mostrarla en el cuadro de texto
 pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
