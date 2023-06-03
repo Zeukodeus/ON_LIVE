@@ -64,13 +64,12 @@ def boton3_clic():
 
 ventana = Tk()
 ventana.title("ON LIVE")
-ventana.geometry("800x450")
-ventana.config(bg="")
+ventana.geometry("1920x1080")
+ventana.config(bg="white")
 
 # Cargar la imagen de fondo
 
 imagen_fondo = PhotoImage(file="img/on_live.png")
-imagen_boton1 = PhotoImage(file="img/morado.png")
 
 # Crear un widget Label para la imagen de fondo
 
@@ -79,28 +78,28 @@ etiqueta_fondo.place(x=0, y=0, relwidth=1, relheight=1)
 
 # Crear un cuadro de texto en el centro de la ventana superior
 
-cuadro_texto = Label(ventana, width=20, bg="black", fg="red", font=("gabriola", 20), relief=FLAT)
-cuadro_texto.place(x=95, y=10, width=600, height=50)
+cuadro_texto = Label(ventana, width=20, bg="black", fg="medium violet red", font=("gabriola", 50), relief=FLAT)
+cuadro_texto.place(x=-5, y=0, width=1920, height=100)
 
 # Barra inferior de respuesta
 
 respuesta = StringVar()
 respuesta.set("Aquí sale la respuesta")
-cuadro_respuesta = Entry(ventana, width=30, bg="white", font="courier", relief=FLAT)
-cuadro_respuesta.place(x=240, y=330)
-cuadro_texto_respuesta = Label(ventana, textvariable=respuesta, width=60, bg="white", fg="green", font=("gabriola", 20), relief=FLAT)
-cuadro_texto_respuesta.place(x=70, y=380)
+cuadro_respuesta = Entry(ventana, width=30, bg="medium violet red", font=("courier", 20), relief=FLAT)
+cuadro_respuesta.place(x=680, y=700)
+cuadro_texto_respuesta = Label(ventana, textvariable=respuesta, width=60, bg="medium violet red", fg="black", font=("gabriola", 58), relief=FLAT)
+cuadro_texto_respuesta.place(x=0, y=890)
 
 # Crear los dos botones de cambio entre preguntas
 
-boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="white", font=("Arial", 12), image=imagen_boton1, padx=10, pady=5, relief=FLAT)
+boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="medium violet red", font=("gabriola", 20), padx=10, pady=5, relief=FLAT)
 boton1.pack(side="left", padx=10)
 
-boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="white", fg="green", font=("Arial", 12), padx=10, pady=5, relief=FLAT)
+boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="medium violet red", fg="black", font=("gabriola", 20), padx=10, pady=5, relief=FLAT)
 boton2.pack(side="right", padx=10)
 
-boton3 = Button(ventana, text="Comprobar", command=boton3_clic, bg="gray", fg="blue", font=("Arial", 12), padx=10, pady=5, relief=FLAT)
-boton3.place(x=330, y=205)
+boton3 = Button(ventana, text="Comprobar", command=boton3_clic, bg="gray", fg="blue", font=("gabriola", 20), padx=10, pady=5, relief=FLAT)
+boton3.place(x=850, y=480)
 
 # Seleccionar una pregunta aleatoria y mostrarla en el cuadro de texto
 pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
