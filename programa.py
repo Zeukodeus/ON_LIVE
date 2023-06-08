@@ -3,16 +3,13 @@ from tkinter import messagebox
 from random import choice
 
 # Definimos un diccionario vacío para almacenar las preguntas y respuestas
-
 preguntas_respuestas = {}
 
 # Función para agregar una pregunta y su respuesta al diccionario
-
 def agregar_pregunta_respuesta(pregunta, respuesta):
     preguntas_respuestas[pregunta] = respuesta
 
 # Función para buscar una respuesta a partir de una pregunta dada
-
 def buscar_respuesta(pregunta):
     if pregunta in preguntas_respuestas:
         return preguntas_respuestas[pregunta]
@@ -342,55 +339,65 @@ agregar_pregunta_respuesta("¿Cuál es el continente con mayor número de paíse
 agregar_pregunta_respuesta("¿Quién escribió 'Don Quijote de la Mancha'?", "Miguel de Cervantes Saavedra")
 agregar_pregunta_respuesta("¿Cuál es la moneda oficial de Japón?", "Yen")
 
-# Función que se ejecutará cuando se haga clic en el botón "Botón 1"
+# Variable para almacenar la pregunta actual
+pregunta_actual = ""
 
+# Variable para controlar si se ha hecho clic en "Comprobar"
+comprobar_clicado = False
+
+# Función que se ejecutará cuando se haga clic en el botón "Omitir"
 def boton1_clic():
-    messagebox.showinfo("ON LIVE", "No se puede retornar")
-
-# Función que se ejecutará cuando se haga clic en el botón "Botón 2"
-
-def boton2_clic():
+    global pregunta_actual
     pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
-    respuesta_aleatoria = preguntas_respuestas[pregunta_aleatoria]
+    # Evitar seleccionar la misma pregunta actual
+    while pregunta_aleatoria == pregunta_actual:
+        pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
     cuadro_texto.config(text=pregunta_aleatoria)
     respuesta.set("Aquí sale la respuesta")
-    cuadro_respuesta.delete(0, END)  # Agregar esta línea para borrar el texto del cuadro de respuesta
+    cuadro_respuesta.delete(0, END)
+    pregunta_actual = pregunta_aleatoria
 
+# Función que se ejecutará cuando se haga clic en el botón "Siguiente"
+def boton2_clic():
+    global pregunta_actual, comprobar_clicado
+    if comprobar_clicado:
+        pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
+        # Evitar seleccionar la misma pregunta actual
+        while pregunta_aleatoria == pregunta_actual:
+            pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
+        cuadro_texto.config(text=pregunta_aleatoria)
+        respuesta.set("Aquí sale la respuesta")
+        cuadro_respuesta.delete(0, END)
+        pregunta_actual = pregunta_aleatoria
+        comprobar_clicado = False
+        boton2.config(state=NORMAL)
+    else:
+        messagebox.showinfo("ON LIVE", "Primero debes hacer clic en 'Comprobar'.")
 
-# Función que se ejecutará cuando se haga clic en el botón "Botón 3"
-
+# Función que se ejecutará cuando se haga clic en el botón "Comprobar"
 def boton3_clic():
+    global comprobar_clicado
     pregunta_actual = cuadro_texto.cget("text")
     respuesta_correcta = buscar_respuesta(pregunta_actual)
-    respuesta_usuario = cuadro_respuesta.get() 
+    respuesta_usuario = cuadro_respuesta.get()
     if respuesta_usuario.lower() == respuesta_correcta.lower():
         respuesta.set("Tu respuesta es correcta")
     else:
         respuesta.set("La respuesta correcta es: " + respuesta_correcta)
+    comprobar_clicado = True
+    boton2.config(state=NORMAL)
 
 # Crear la ventana principal
-
 ventana = Tk()
 ventana.title("ON LIVE")
 ventana.geometry("1920x1080")
 ventana.config(bg="white")
 
-# Cargar la imagen de fondo
-
-imagen_fondo = PhotoImage(file="img/on_live.png")
-
-# Crear un widget Label para la imagen de fondo
-
-etiqueta_fondo = Label(ventana, image=imagen_fondo)
-etiqueta_fondo.place(x=0, y=0, relwidth=1, relheight=1)
-
 # Crear un cuadro de texto en el centro de la ventana superior
-
 cuadro_texto = Label(ventana, width=20, bg="black", fg="medium violet red", font=("gabriola", 50), relief=FLAT)
 cuadro_texto.place(x=-5, y=0, width=1920, height=100)
 
 # Barra inferior de respuesta
-
 respuesta = StringVar()
 respuesta.set("Aquí sale la respuesta")
 cuadro_respuesta = Entry(ventana, width=30, bg="medium violet red", font=("courier", 20), relief=FLAT)
@@ -399,12 +406,12 @@ cuadro_texto_respuesta = Label(ventana, textvariable=respuesta, width=60, bg="me
 cuadro_texto_respuesta.place(x=0, y=890)
 
 # Crear los dos botones de cambio entre preguntas
-
-boton1 = Button(ventana, text="Anterior", command=boton1_clic, bg="black", fg="medium violet red", font=("gabriola", 20), padx=10, pady=5, relief=FLAT)
+boton1 = Button(ventana, text="Omitir", command=boton1_clic, bg="black", fg="medium violet red", font=("gabriola", 20), padx=10, pady=5, relief=FLAT)
 boton1.pack(side="left", padx=10)
 
 boton2 = Button(ventana, text="Siguiente", command=boton2_clic, bg="medium violet red", fg="black", font=("gabriola", 20), padx=10, pady=5, relief=FLAT)
 boton2.pack(side="right", padx=10)
+boton2.config(state=NORMAL)
 
 boton3 = Button(ventana, text="Comprobar", command=boton3_clic, bg="gray", fg="blue", font=("gabriola", 20), padx=10, pady=5, relief=FLAT)
 boton3.place(x=850, y=480)
@@ -412,7 +419,7 @@ boton3.place(x=850, y=480)
 # Seleccionar una pregunta aleatoria y mostrarla en el cuadro de texto
 pregunta_aleatoria = choice(list(preguntas_respuestas.keys()))
 cuadro_texto.config(text=pregunta_aleatoria)
+pregunta_actual = pregunta_aleatoria
 
 # Iniciar el bucle principal de la aplicación
-
 ventana.mainloop()
